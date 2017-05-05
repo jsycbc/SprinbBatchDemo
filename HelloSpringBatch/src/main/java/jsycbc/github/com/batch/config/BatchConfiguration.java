@@ -21,28 +21,23 @@ import org.springframework.context.annotation.Configuration;
 @EnableBatchProcessing
 public class BatchConfiguration {
 
-  @Autowired
-  private JobBuilderFactory jobBuilderFactory;
+    @Autowired
+    private JobBuilderFactory jobBuilderFactory;
 
-  @Autowired
-  private StepBuilderFactory stepBuilderFactory;
+    @Autowired
+    private StepBuilderFactory stepBuilderFactory;
 
-  @Bean
-  public Step step1() {
-    return stepBuilderFactory.get("step1")
-        .tasklet(new Tasklet() {
-          public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) {
-            return null;
-          }
-        })
-        .build();
-  }
+    @Bean
+    public Step step1() {
+	return stepBuilderFactory.get("step1").tasklet(new Tasklet() {
+	    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) {
+		return null;
+	    }
+	}).build();
+    }
 
-  @Bean
-  public Job job(Step step1) throws Exception {
-    return jobBuilderFactory.get("job1")
-        .incrementer(new RunIdIncrementer())
-        .start(step1)
-        .build();
-  }
+    @Bean
+    public Job job(Step step1) throws Exception {
+	return jobBuilderFactory.get("job1").incrementer(new RunIdIncrementer()).start(step1).build();
+    }
 }

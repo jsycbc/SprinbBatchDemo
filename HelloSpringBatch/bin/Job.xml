@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd">
+	<import resource="jobContext.xml"></import>
+	<job id="myjob" xmlns="http://www.springframework.org/schema/batch">
+		<step id="mystep1">
+			<tasklet transaction-manager="transactionManager">
+				<chunk reader="cvsItemReader" writer="cvsItemWriter"
+					processor="myProcessor" commit-interval="2" />
+			</tasklet>
+		</step>
+	</job>
+
+	<bean id="cvsItemReader" class="org.springframework.batch.item.file.FlatFileItemReader"
+		scope="step">
+		<property name="resource" value="sample-data.csv"></property>
+		<property name="lineMapper">
+			<bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+				<property name="lineTokenizer" ref="lineTokenizer"></property>
+				<property name="fieldSetMapper">
+					<bean
+						class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper">
+						<property name="prototypeBeanName" value="person"></property>
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="lineTokenizer"
+		class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
+		<property name="delimiter" value=","></property>
+		<property name="names">
+			<list>
+				<value>lastName</value>
+				<value>firstName</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="person" class="jsycbc.github.com.batch.bo.Person"></bean>
+
+	<bean id="cvsItemWriter" class="org.springframework.batch.item.file.FlatFileItemWriter"
+		scope="step">
+		<property name="resource" value="outputFile.csv"></property>
+		<property name="lineAggregator">
+			<bean
+				class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+				<property name="delimiter" value=","></property>
+				<property name="fieldExtractor">
+					<bean
+						class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+						<property name="names" value="firstName,lastName"></property>
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="myProcessor" scope="step"
+		class="jsycbc.github.com.batch.processor.MyProcessor">
+	</bean>
+</beans>
