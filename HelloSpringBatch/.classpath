@@ -4,14 +4,8 @@
 	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="src" path="src/main/resource"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/spring-framework-lib"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-batch-core"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-batch-core-tests"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-batch-infrastructure"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-batch-infrastructure-tests"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-batch-integration"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-batch-samples"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-batch-test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/spring"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/springbatch"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
